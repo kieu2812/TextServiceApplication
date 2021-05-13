@@ -1,8 +1,12 @@
 package com.example.textservice;
 
+
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class TextServiceController {
@@ -20,4 +24,24 @@ public class TextServiceController {
         return resultString.toString();
     }
 
+    @GetMapping("/redact")
+    public String getRedact(@RequestParam String original, @RequestParam(value="badWord") List<String> badWords ){
+        for(String badWord: badWords){
+            String replaceStr =repeatStr(badWord);
+            original = original.replaceAll(badWord, replaceStr);
+        }
+        return original;
+    }
+
+    private  String repeatStr(String source){
+        StringBuilder builder = new StringBuilder();
+        for(int i=0;i< source.length();i++){
+            builder.append("*");
+        }
+        return builder.toString();
+    }
+
+    public static void main(String[] args) {
+
+    }
 }

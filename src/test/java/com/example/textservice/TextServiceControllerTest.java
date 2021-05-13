@@ -37,4 +37,22 @@ public class TextServiceControllerTest {
 
     }
 
+    @Test
+    public void testGetRedact() throws  Exception{
+        RequestBuilder request = get("/redact")
+                .param("original", "A little of this and a little of that")
+                .param("badWord", "little")
+                .param("badWord", "this");
+        this.mvc.perform(request).andExpect(status().isOk())
+                .andExpect(content().string("A ****** of **** and a ****** of that"));
+    }
+    @Test
+    public void testGetRedactOneBadWord() throws  Exception{
+        RequestBuilder request = get("/redact")
+                .param("original", "A little of this and a little of that")
+                .param("badWord", "little");
+
+        this.mvc.perform(request).andExpect(status().isOk())
+                .andExpect(content().string("A ****** of this and a ****** of that"));
+    }
 }
