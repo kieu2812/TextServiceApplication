@@ -2,9 +2,7 @@ package com.example.textservice;
 
 
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,8 +38,11 @@ public class TextServiceController {
         }
         return builder.toString();
     }
+    @PostMapping("/s/{find}/{replacement}")
+    public String findAndReplace(@RequestBody String s, @PathVariable String find, @PathVariable String replacement ){
 
-    public static void main(String[] args) {
+        return s.replaceAll(find, replacement);
 
     }
+
 }
